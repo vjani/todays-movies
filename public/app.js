@@ -4,9 +4,6 @@ fetch('/movies')
     const swiperWrapper = document.querySelector('.swiper-wrapper');
 
     data.forEach((movie) => {
-      if (!movie.title) {
-        return;
-      }
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
 

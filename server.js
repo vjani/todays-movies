@@ -12,7 +12,7 @@ app.get('/movies', async (req, res) => {
     const TMDB_API_KEY = '6a92a29e1163b7af031dbc2067d4ffd5';
     const OMDB_API_KEY = '8a358176';
     const randomPage = Math.floor(Math.random() * 10) + 1;
-    const TMDB_API_URL = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${TMDB_API_KEY}&page=${randomPage}`;
+    const TMDB_API_URL = `https://api.themoviedb.org/3/discover/movie?sort_by=revenue.desc&api_key=${TMDB_API_KEY}&page=${randomPage}&include_adult=false`;
     
     try {
       const tmdbResponse = await axios.get(TMDB_API_URL);
@@ -30,8 +30,7 @@ app.get('/movies', async (req, res) => {
     
           const omdbResponse = await axios.get(`http://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`);
           const rating = omdbResponse.data.imdbRating;
-          if (!adult)
-            return {
+          return {
                 title: movie.title,
                 posterPath: movie.poster_path,
                 overview: movie.overview,
@@ -39,7 +38,6 @@ app.get('/movies', async (req, res) => {
                 providers,
                 adult: movie.adult
             };
-        else return {};
         })
       );
     
