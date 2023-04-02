@@ -21,7 +21,25 @@ fetch('/movies')
 
       const watch = document.createElement('div');
       watch.className = 'movie-watch';
-      // ...rest of the code remains the same
+      
+      const providers = movie.providers;
+
+      if (providers) {
+        const buyProviders = providers.buy
+          ? 'Buy: ' + providers.buy.map((provider) => provider.provider_name).join(', ') + '<br>'
+          : '';
+        const rentProviders = providers.rent
+          ? 'Rent: ' + providers.rent.map((provider) => provider.provider_name).join(', ') + '<br>'
+          : '';
+        const flatrateProviders = providers.flatrate
+          ? 'Stream: ' + providers.flatrate.map((provider) => provider.provider_name).join(', ') + '<br>'
+          : '';
+
+        watch.innerHTML = buyProviders + rentProviders + flatrateProviders;
+      } else {
+        watch.textContent = 'No streaming information available.';
+      }
+
 
       slide.appendChild(moviePoster);
       slide.appendChild(title);
@@ -31,9 +49,12 @@ fetch('/movies')
     });
 
     new Swiper('.swiper-container', {
+      direction: 'vertical', // Add this line
+      slidesPerView: 'auto', // Add this line
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
       },
     });
+    
   });

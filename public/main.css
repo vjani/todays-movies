@@ -7,8 +7,10 @@ body {
   }
   
   .swiper-container {
+    height: 100vh; /* Add this line */
     width: 100%;
-    height: 100vh;
+    position: relative;
+    overflow: hidden;
   }
   
   .swiper-slide {
@@ -17,8 +19,12 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color: #1a1a1a; /* Change this line */
+    background-color: #1a1a1a;
     position: relative;
+    /* Add these lines */
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .movie-poster {
