@@ -4,6 +4,9 @@ fetch('/movies')
     const swiperWrapper = document.querySelector('.swiper-wrapper');
 
     data.forEach((movie) => {
+      if (!movie.title) {
+        return;
+      }
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
 
@@ -26,20 +29,19 @@ fetch('/movies')
 
       if (providers) {
         const buyProviders = providers.buy
-          ? 'Buy: ' + providers.buy.map((provider) => provider.provider_name).join(', ') + '<br>'
+          ? '<b>Buy:</b> ' + providers.buy.map((provider) => provider.provider_name).join(', ') + '<br>'
           : '';
         const rentProviders = providers.rent
-          ? 'Rent: ' + providers.rent.map((provider) => provider.provider_name).join(', ') + '<br>'
+          ? '<b>Rent:</b> ' + providers.rent.map((provider) => provider.provider_name).join(', ') + '<br>'
           : '';
         const flatrateProviders = providers.flatrate
-          ? 'Stream: ' + providers.flatrate.map((provider) => provider.provider_name).join(', ') + '<br>'
+          ? '<b>Stream:</b> ' + providers.flatrate.map((provider) => provider.provider_name).join(', ') + '<br>'
           : '';
 
         watch.innerHTML = buyProviders + rentProviders + flatrateProviders;
       } else {
         watch.textContent = 'No streaming information available.';
       }
-
 
       slide.appendChild(moviePoster);
       slide.appendChild(title);

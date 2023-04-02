@@ -30,14 +30,16 @@ app.get('/movies', async (req, res) => {
     
           const omdbResponse = await axios.get(`http://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`);
           const rating = omdbResponse.data.imdbRating;
-    
-          return {
-            title: movie.title,
-            posterPath: movie.poster_path,
-            overview: movie.overview,
-            rating,
-            providers,
-          };
+          if (!adult)
+            return {
+                title: movie.title,
+                posterPath: movie.poster_path,
+                overview: movie.overview,
+                rating,
+                providers,
+                adult: movie.adult
+            };
+        else return {};
         })
       );
     
