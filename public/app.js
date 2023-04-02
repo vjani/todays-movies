@@ -6,7 +6,10 @@ fetch('/movies')
     data.forEach((movie) => {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
-      slide.style.backgroundImage = `url(https://image.tmdb.org/t/p/w500${movie.posterPath})`;
+
+      const moviePoster = document.createElement('div');
+      moviePoster.className = 'movie-poster';
+      moviePoster.style.backgroundImage = `url(https://image.tmdb.org/t/p/w500${movie.posterPath})`;
 
       const title = document.createElement('h2');
       title.className = 'movie-title';
@@ -18,25 +21,9 @@ fetch('/movies')
 
       const watch = document.createElement('div');
       watch.className = 'movie-watch';
+      // ...rest of the code remains the same
 
-      const providers = movie.providers;
-
-      if (providers) {
-        const buyProviders = providers.buy
-          ? 'Buy: ' + providers.buy.map((provider) => provider.provider_name).join(', ') + '<br>'
-          : '';
-        const rentProviders = providers.rent
-          ? 'Rent: ' + providers.rent.map((provider) => provider.provider_name).join(', ') + '<br>'
-          : '';
-        const flatrateProviders = providers.flatrate
-          ? 'Stream: ' + providers.flatrate.map((provider) => provider.provider_name).join(', ') + '<br>'
-          : '';
-
-        watch.innerHTML = buyProviders + rentProviders + flatrateProviders;
-      } else {
-        watch.textContent = 'No streaming information available.';
-      }
-
+      slide.appendChild(moviePoster);
       slide.appendChild(title);
       slide.appendChild(overview);
       slide.appendChild(watch);
