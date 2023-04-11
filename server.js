@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,8 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/movies', async (req, res) => {
-    const TMDB_API_KEY = '6a92a29e1163b7af031dbc2067d4ffd5';
-    const OMDB_API_KEY = '8a358176';
+    const TMDB_API_KEY = process.env.TMDB_API_KEY;
+    const OMDB_API_KEY = process.env.OMDB_API_KEY;
     const randomPage = Math.floor(Math.random() * 10) + 1;
     const TMDB_API_URL = `https://api.themoviedb.org/3/discover/movie?sort_by=revenue.desc&api_key=${TMDB_API_KEY}&page=${randomPage}&include_adult=false`;
     
@@ -35,8 +36,7 @@ app.get('/movies', async (req, res) => {
                 posterPath: movie.poster_path,
                 overview: movie.overview,
                 rating,
-                providers,
-                adult: movie.adult
+                providers
             };
         })
       );
