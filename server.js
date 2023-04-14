@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const moment = require('moment')
 require('dotenv').config();
 
 const app = express();
@@ -13,10 +14,17 @@ app.get('/movies', async (req, res) => {
     const TMDB_API_KEY = process.env.TMDB_API_KEY;
     const OMDB_API_KEY = process.env.OMDB_API_KEY;
     const randomPage = Math.floor(Math.random() * 10) + 1;
-    const TMDB_API_URL = `https://api.themoviedb.org/3/discover/movie?sort_by=revenue.desc&api_key=${TMDB_API_KEY}&page=${randomPage}&include_adult=false`;
+    const TMDB_API_URL = `https://api.themoviedb.org/3/discover/movie?sort_by=primary_release_date.desc&api_key=${TMDB_API_KEY}&page=${randomPage}&include_adult=false&language=en-US&vote-count.gte=500&release_date.ltmoment().format('YYYY-MM-DD'),`;
     
     try {
-      const tmdbResponse = await axios.get(TMDB_API_URL);
+      const tmdbResponse = await axios.get(TMDB_API_URL, {params:{
+        api_key: process.env.TMDB_API_KEY,
+        language: 'en-US',
+        sort_by: 'primary_release_date.desc',
+        'release_date.lte': moment().format('YYYY-MM-DD'),
+        'vote_count.gte': 500,
+        page: 1
+      }});
       const movies = tmdbResponse.data.results.slice(0, 5);
     
       const movieData = await Promise.all(
