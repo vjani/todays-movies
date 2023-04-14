@@ -23,7 +23,7 @@ app.get('/movies', async (req, res) => {
         sort_by: 'primary_release_date.desc',
         'release_date.lte': moment().format('YYYY-MM-DD'),
         'vote_count.gte': 500,
-        page: 1
+        page: randomPage
       }});
       const movies = tmdbResponse.data.results.slice(0, 5);
     
