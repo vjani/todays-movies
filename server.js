@@ -25,7 +25,7 @@ app.get('/movies', async (req, res) => {
         'vote_count.gte': 500,
         page: randomPage
       }});
-      const movies = tmdbResponse.data.results.slice(0, 5);
+      const movies = tmdbResponse.data.results;
     
       const movieData = await Promise.all(
         movies.map(async (movie) => {
